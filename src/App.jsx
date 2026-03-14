@@ -12,71 +12,76 @@ import Register from "./pages/Register";
 import BoatDetails from "./pages/BoatDetails";
 import AdminPage from "./pages/AdminPage";
 import BoatLogin from "./pages/BoatLogin";
+import AdminLogin from "./pages/AdminLogin";
 
 /* LIVE SYSTEM */
 import LiveMap from "./pages/LiveMap";
 import LiveDashboard from "./pages/LiveDashboard";
 
-/* NEW PAGES */
+/* PROJECT PAGES */
 import TeamPage from "./pages/TeamPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import WorkPage from "./pages/WorkPage";
-import "leaflet/dist/leaflet.css";
 import IssuesPage from "./pages/IssuesPage";
+
+import "leaflet/dist/leaflet.css";
 
 function App() {
 
-return (
+  return (
 
-<BrowserRouter>
+    <BrowserRouter>
 
-<Navbar />
+      <Navbar />
 
-<Routes>
+      <Routes>
 
-{/* MAIN WEBSITE */}
+        {/* MAIN WEBSITE */}
 
-<Route path="/" element={<Home />} />
-<Route path="/about" element={<About />} />
-<Route path="/features" element={<Features />} />
-<Route path="/working" element={<Working />} />
-<Route path="/benefits" element={<Benefits />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/working" element={<Working />} />
+        <Route path="/benefits" element={<Benefits />} />
 
-{/* NEW PAGES */}
+        {/* PROJECT PAGES */}
 
-<Route path="/team" element={<TeamPage />} />
-<Route path="/achievements" element={<AchievementsPage />} />
-{/* NEW PAGE */}
-<Route path="/work" element={<WorkPage />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/achievements" element={<AchievementsPage />} />
+        <Route path="/work" element={<WorkPage />} />
+        <Route path="/issues" element={<IssuesPage />} />
 
-{/* AUTH */}
+        {/* AUTH */}
 
-<Route path="/login" element={<Login />} />
-<Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-{/* ADMIN */}
+        {/* ADMIN PANEL */}
 
-<Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminPage />} />
 
-{/* BOAT LOGIN */}
+        {/* BOAT LOGIN */}
 
-<Route path="/boat-login" element={<BoatLogin />} />
+        <Route path="/boat-login" element={<BoatLogin />} />
 
-{/* BOAT DETAILS */}
+        <Route path="/admin" element={<AdminLogin />} />
 
-<Route path="/boat-details" element={<BoatDetails />} />
+<Route path="/admin-dashboard" element={<AdminPage />} />
 
-{/* LIVE STATUS */}
+        {/* BOAT DETAILS */}
 
-<Route path="/livestatus" element={<LiveMap />} />
-<Route path="/live-dashboard" element={<LiveDashboard />} />
-<Route path="/issues" element={<IssuesPage />} />
+        <Route path="/boat-details" element={<BoatDetails />} />
 
-</Routes>
+        {/* LIVE MONITORING */}
 
-</BrowserRouter>
+        <Route path="/livestatus" element={<LiveMap />} />
+        <Route path="/live-dashboard" element={<LiveDashboard />} />
 
-);
+      </Routes>
+
+    </BrowserRouter>
+
+  );
 
 }
 

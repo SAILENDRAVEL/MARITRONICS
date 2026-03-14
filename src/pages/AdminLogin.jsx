@@ -37,7 +37,7 @@ const AdminPage = () => {
 
     e.preventDefault();
 
-    if(adminId === "Maritronics@123" && password === "280306"){
+    if(adminId === "admin" && password === "1234"){
 
       localStorage.setItem("adminAuth","true");
 
