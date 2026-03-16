@@ -1,126 +1,106 @@
-import centerImg from "../assets/center image.png";
-
 const FeaturesSection = () => {
   return (
     <section
       id="features"
       className="relative min-h-screen flex items-center justify-center
-                 bg-gradient-to-b from-[#021726] via-[#032c4a] to-[#021726]
-                 text-white overflow-hidden px-6"
+                 pt-28 pb-24 px-6 text-white
+                 bg-gradient-to-b from-[#020617] via-[#02142a] to-[#020617]
+                 overflow-hidden"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,180,255,0.18),transparent_65%)]" />
 
-      <div className="relative z-10 max-w-7xl w-full">
+      {/* Glow Effects */}
+      <div className="absolute top-20 left-0 w-72 h-72 bg-cyan-500/10 blur-[120px]"></div>
+      <div className="absolute bottom-20 right-0 w-72 h-72 bg-blue-500/10 blur-[120px]"></div>
+
+      <div className="relative max-w-7xl w-full">
 
         {/* Heading */}
-        <h2 className="text-center text-4xl md:text-5xl font-extrabold mb-20">
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-500
-                           bg-clip-text text-transparent">
-            Key Features
-          </span>
+        <h2 className="text-center text-4xl md:text-5xl font-extrabold mb-20
+                       bg-gradient-to-r from-cyan-400 to-blue-500
+                       bg-clip-text text-transparent">
+          Key Features
         </h2>
 
-        {/* Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-14 items-center">
+        {/* Feature Grid */}
+        <div className="grid md:grid-cols-3 gap-8">
 
-          {/* LEFT FEATURES */}
-          <div className="space-y-12 text-right">
-            <FeatureItem
-              icon="📍"
-              title="Real-Time Location Tracking"
-              desc="Continuous tracking using NAVIC GNSS for accurate boat positioning."
-              align="right"
-            />
-            <FeatureItem
-              icon="🛡️"
-              title="Predefined Geofence Limits"
-              desc="Virtual maritime boundaries prevent accidental border crossing."
-              align="right"
-            />
-            <FeatureItem
-              icon="📨"
-              title="Automatic SMS Alerts"
-              desc="Instant alerts sent to family members and coastal authorities."
-              align="right"
-            />
-          </div>
+          <FeatureCard
+            icon="📍"
+            title="Real-time location tracking"
+            desc="Continuous tracking using NAVIC GNSS for accurate boat positioning."
+          />
 
-          {/* CENTER SQUARE IMAGE */}
-          <div className="flex justify-center">
+          <FeatureCard
+            icon="🛡️"
+            title="Pre-programmed geofencing limits"
+            desc="Virtual maritime boundaries prevent accidental border crossing."
+          />
 
-            <div
-              className="w-100 h-100 rounded-2xl
-                         bg-gradient-to-br from-cyan-400/20 to-blue-600/20
-                         border border-cyan-400/40
-                         backdrop-blur-xl shadow-2xl
-                         flex items-center justify-center
-                         hover:scale-105 transition duration-300"
-            >
+          <FeatureCard
+            icon="🚨"
+            title="Multi-step alert mechanism"
+            desc="Buzzer and LED alerts warn fishermen before danger zones."
+          />
 
-              <img
-                src={centerImg}
-                alt="System Features"
-                className="w-65 h-60 object-contain"
-              />
+          <FeatureCard
+            icon="📨"
+            title="Automatic SMS alerts"
+            desc="Instant alerts sent to family members and coastal authorities."
+          />
 
-            </div>
+          <FeatureCard
+            icon="⚙️"
+            title="Servo-based throttle control"
+            desc="Servo motor automatically reduces boat speed near borders."
+          />
 
-          </div>
+          <FeatureCard
+            icon="💾"
+            title="FRAM data logging"
+            desc="Navigation routes and violations stored securely for review."
+          />
 
-          {/* RIGHT FEATURES */}
-          <div className="space-y-12 text-left">
-            <FeatureItem
-              icon="🚨"
-              title="Multi-Level Alert System"
-              desc="Buzzer and LED alerts warn fishermen before danger zones."
-            />
-            <FeatureItem
-              icon="⚙️"
-              title="Automatic Speed Control"
-              desc="Servo motor reduces throttle automatically near borders."
-            />
-            <FeatureItem
-              icon="💾"
-              title="FRAM Data Logging"
-              desc="Navigation routes and violations stored securely for review."
-            />
-          </div>
+          <FeatureCard
+            icon="🔧"
+            title="Manual reset & override"
+            desc="Allows fishermen to reset the system during emergencies."
+          />
 
         </div>
+
       </div>
     </section>
   );
 };
 
 
-/* 🔹 Feature Item with hover glow */
-const FeatureItem = ({ icon, title, desc, align = "left" }) => {
+
+/* Feature Card */
+
+const FeatureCard = ({ icon, title, desc }) => {
   return (
     <div
-      className={`group flex gap-4 items-start
-                  ${align === "right" ? "flex-row-reverse text-right" : ""}`}
+      className="bg-white/5 border border-white/10
+                 backdrop-blur-xl rounded-xl p-6
+                 flex items-start gap-4
+                 hover:scale-105 hover:border-cyan-400/40
+                 hover:shadow-[0_0_25px_rgba(0,255,255,0.15)]
+                 transition duration-300"
     >
-      {/* ICON */}
-      <div
-        className="w-12 h-12 flex items-center justify-center text-xl
-                   rounded-xl bg-cyan-400/10 text-cyan-300
-                   group-hover:bg-cyan-400/20
-                   group-hover:shadow-[0_0_25px_rgba(0,255,255,0.6)]
-                   transition-all duration-300"
-      >
+
+      <div className="text-2xl text-cyan-400">
         {icon}
       </div>
 
-      {/* TEXT */}
-      <div className="group-hover:-translate-y-1 transition-all duration-300">
-        <h3 className="text-xl font-semibold text-cyan-300 mb-2">
+      <div>
+        <h3 className="font-semibold text-cyan-300 mb-1">
           {title}
         </h3>
-        <p className="text-gray-300 max-w-sm leading-relaxed">
+        <p className="text-gray-400 text-sm leading-relaxed">
           {desc}
         </p>
       </div>
+
     </div>
   );
 };

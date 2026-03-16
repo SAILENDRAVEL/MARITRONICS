@@ -16,7 +16,7 @@ const interval=setInterval(()=>{
 
 setResearch(prev => prev<1 ? prev+1 : 1);
 setPrototypes(prev => prev<3 ? prev+1 : 3);
-setTeam(prev => prev<5 ? prev+1 : 5);
+setTeam(prev => prev<3 ? prev+1 : 3); // ✅ Changed from 5 → 3
 
 },400);
 
@@ -137,7 +137,7 @@ alt="Fishermen Safety System"
 className="rounded-3xl shadow-2xl"
 />
 
-{/* ACHIEVEMENTS CARD (BOTTOM LEFT) */}
+{/* ACHIEVEMENTS CARD */}
 
 <div
 onClick={()=>navigate("/achievements")}
