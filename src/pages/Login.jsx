@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../utils/auth";
 import { useEffect } from "react";
-import loginImage from "../assets/login-image.png";
+import loginImage from "src/assets/login-image.png";
 
 const Login = () => {
   const navigate = useNavigate();
