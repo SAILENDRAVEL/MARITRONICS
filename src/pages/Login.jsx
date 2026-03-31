@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../utils/auth";
 import { useEffect } from "react";
-import loginImage from "src/assets/login-image.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -119,7 +118,7 @@ const Login = () => {
         {/* RIGHT SIDE IMAGE */}
         <div className="hidden md:block relative">
           <img
-            src={loginImage}
+            src="/login-image.png"   // ✅ FIXED (NO IMPORT)
             alt="Login visual"
             className="w-full h-full object-cover"
           />
