@@ -12,7 +12,6 @@ import Register from "./pages/Register";
 import BoatDetails from "./pages/BoatDetails";
 import AdminPage from "./pages/AdminPage";
 import BoatLogin from "./pages/BoatLogin";
-import AdminLogin from "./pages/AdminLogin";
 
 /* LIVE SYSTEM */
 
@@ -59,9 +58,10 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* ADMIN */}
+{/* ADMIN */}
 
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminPage />} />
+<Route path="/admin" element={<AdminPage />} />
+<Route path="/admin-dashboard" element={<AdminPage />} />
 
         {/* BOAT LOGIN */}
 
