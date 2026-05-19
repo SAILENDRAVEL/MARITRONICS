@@ -5,31 +5,35 @@ const AdminPage = () => {
 
   const navigate = useNavigate();
 
+  /* API URL */
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   /* LOGIN STATE */
 
-  const [adminId,setAdminId] = useState("");
-  const [password,setPassword] = useState("");
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [adminId, setAdminId] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   /* BOAT STATES */
 
-  const [name,setName] = useState("");
-  const [boatId,setBoatId] = useState("");
-  const [district,setDistrict] = useState("");
-  const [boats,setBoats] = useState([]);
+  const [name, setName] = useState("");
+  const [boatId, setBoatId] = useState("");
+  const [district, setDistrict] = useState("");
+  const [boats, setBoats] = useState([]);
 
   /* CHECK LOGIN STATUS */
 
-  useEffect(()=>{
+  useEffect(() => {
 
     const auth = localStorage.getItem("adminAuth");
 
-    if(auth === "true"){
+    if (auth === "true") {
       setIsLoggedIn(true);
       fetchBoats();
     }
 
-  },[]);
+  }, []);
 
   /* LOGIN FUNCTION */
 
@@ -37,16 +41,15 @@ const AdminPage = () => {
 
     e.preventDefault();
 
-    if(adminId === "Maritronics@123" && password === "280306"){
+    if (adminId === "Maritronics@123" && password === "280306") {
 
-      localStorage.setItem("adminAuth","true");
+      localStorage.setItem("adminAuth", "true");
 
       setIsLoggedIn(true);
 
       fetchBoats();
 
-    }
-    else{
+    } else {
 
       alert("Invalid Admin ID or Password");
 
@@ -58,11 +61,19 @@ const AdminPage = () => {
 
   const fetchBoats = async () => {
 
-    const res = await fetch("http://localhost:5000/api/boat/allBoats");
+    try {
 
-    const data = await res.json();
+      const res = await fetch(`${API_URL}/api/boat/allBoats`);
 
-    setBoats(data);
+      const data = await res.json();
+
+      setBoats(data);
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
 
   };
 
@@ -72,23 +83,31 @@ const AdminPage = () => {
 
     e.preventDefault();
 
-    await fetch("http://localhost:5000/api/boat/addBoat",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        name,
-        boatId,
-        district
-      })
-    });
+    try {
 
-    setName("");
-    setBoatId("");
-    setDistrict("");
+      await fetch(`${API_URL}/api/boat/addBoat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          boatId,
+          district
+        })
+      });
 
-    fetchBoats();
+      setName("");
+      setBoatId("");
+      setDistrict("");
+
+      fetchBoats();
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
 
   };
 
@@ -96,11 +115,19 @@ const AdminPage = () => {
 
   const deleteBoat = async (id) => {
 
-    await fetch(`http://localhost:5000/api/boat/deleteBoat/${id}`,{
-      method:"DELETE"
-    });
+    try {
 
-    fetchBoats();
+      await fetch(`${API_URL}/api/boat/deleteBoat/${id}`, {
+        method: "DELETE"
+      });
+
+      fetchBoats();
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
 
   };
 
@@ -112,47 +139,49 @@ const AdminPage = () => {
 
     setIsLoggedIn(false);
 
-    navigate("/admin");
+    navigate("/admin-login");
 
   };
 
-  const uniqueDistricts = [...new Set(boats.map(b=>b.district))].length;
+  const uniqueDistricts = [...new Set(boats.map((b) => b.district))].length;
 
   /* ================= LOGIN PAGE ================= */
 
-  if(!isLoggedIn){
+  if (!isLoggedIn) {
 
-    return(
+    return (
 
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
 
         <form
-        onSubmit={handleLogin}
-        className="bg-white/10 backdrop-blur-lg border border-white/20 p-10 rounded-2xl shadow-xl w-96">
+          onSubmit={handleLogin}
+          className="bg-white/10 backdrop-blur-lg border border-white/20 p-10 rounded-2xl shadow-xl w-96"
+        >
 
           <h2 className="text-3xl font-bold mb-6 text-center text-cyan-400">
             🔐 Admin Login
           </h2>
 
           <input
-          value={adminId}
-          onChange={(e)=>setAdminId(e.target.value)}
-          placeholder="Admin ID"
-          className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg focus:border-cyan-400 outline-none"
-          required
+            value={adminId}
+            onChange={(e) => setAdminId(e.target.value)}
+            placeholder="Admin ID"
+            className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg focus:border-cyan-400 outline-none"
+            required
           />
 
           <input
-          type="password"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-          placeholder="Password"
-          className="w-full p-3 mb-6 bg-black border border-gray-600 rounded-lg focus:border-cyan-400 outline-none"
-          required
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full p-3 mb-6 bg-black border border-gray-600 rounded-lg focus:border-cyan-400 outline-none"
+            required
           />
 
           <button
-          className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 py-3 rounded-lg font-semibold hover:scale-105 transition">
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 py-3 rounded-lg font-semibold hover:scale-105 transition"
+          >
 
             Login
 
@@ -168,7 +197,7 @@ const AdminPage = () => {
 
   /* ================= DASHBOARD ================= */
 
-  return(
+  return (
 
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-28 px-10 pb-10">
 
@@ -183,8 +212,9 @@ const AdminPage = () => {
         {/* LOGOUT BUTTON */}
 
         <button
-        onClick={handleLogout}
-        className="bg-red-500 px-6 py-2 rounded-lg hover:bg-red-600 hover:scale-105 transition">
+          onClick={handleLogout}
+          className="bg-red-500 px-6 py-2 rounded-lg hover:bg-red-600 hover:scale-105 transition"
+        >
 
           Logout
 
@@ -194,79 +224,88 @@ const AdminPage = () => {
 
       <div className="grid md:grid-cols-2 gap-10">
 
-      {/* ADD BOAT */}
+        {/* ADD BOAT */}
 
-      <form
-      onSubmit={handleSubmit}
-      className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl shadow-xl max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl shadow-xl max-w-md"
+        >
 
-        <h2 className="text-xl mb-6 font-semibold text-cyan-400">
-          ➕ Add Boat
-        </h2>
+          <h2 className="text-xl mb-6 font-semibold text-cyan-400">
+            ➕ Add Boat
+          </h2>
 
-        <input
-        value={name}
-        onChange={(e)=>setName(e.target.value)}
-        placeholder="Fisherman Name"
-        className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg"
-        required
-        />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Fisherman Name"
+            className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg"
+            required
+          />
 
-        <input
-        value={boatId}
-        onChange={(e)=>setBoatId(e.target.value)}
-        placeholder="Boat ID"
-        className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg"
-        required
-        />
+          <input
+            value={boatId}
+            onChange={(e) => setBoatId(e.target.value)}
+            placeholder="Boat ID"
+            className="w-full p-3 mb-4 bg-black border border-gray-600 rounded-lg"
+            required
+          />
 
-        <input
-        value={district}
-        onChange={(e)=>setDistrict(e.target.value)}
-        placeholder="District"
-        className="w-full p-3 mb-6 bg-black border border-gray-600 rounded-lg"
-        required
-        />
+          <input
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            placeholder="District"
+            className="w-full p-3 mb-6 bg-black border border-gray-600 rounded-lg"
+            required
+          />
 
-        <button className="bg-gradient-to-r from-cyan-500 to-blue-500 px-6 py-2 rounded-lg hover:scale-105 transition">
-          Add Boat
-        </button>
+          <button className="bg-gradient-to-r from-cyan-500 to-blue-500 px-6 py-2 rounded-lg hover:scale-105 transition">
+            Add Boat
+          </button>
 
-      </form>
+        </form>
 
-      {/* STATISTICS */}
+        {/* STATISTICS */}
 
-      <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl shadow-xl">
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl shadow-xl">
 
-        <h2 className="text-xl mb-6 text-purple-400 font-semibold">
-          📊 Boat Statistics
-        </h2>
+          <h2 className="text-xl mb-6 text-purple-400 font-semibold">
+            📊 Boat Statistics
+          </h2>
 
-        <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6">
 
-          <div className="bg-cyan-500/20 p-5 rounded-xl">
-            <p>Total Boats</p>
-            <h3 className="text-3xl text-cyan-400 font-bold">{boats.length}</h3>
-          </div>
+            <div className="bg-cyan-500/20 p-5 rounded-xl">
+              <p>Total Boats</p>
+              <h3 className="text-3xl text-cyan-400 font-bold">
+                {boats.length}
+              </h3>
+            </div>
 
-          <div className="bg-green-500/20 p-5 rounded-xl">
-            <p>Active Boats</p>
-            <h3 className="text-3xl text-green-400 font-bold">{boats.length}</h3>
-          </div>
+            <div className="bg-green-500/20 p-5 rounded-xl">
+              <p>Active Boats</p>
+              <h3 className="text-3xl text-green-400 font-bold">
+                {boats.length}
+              </h3>
+            </div>
 
-          <div className="bg-purple-500/20 p-5 rounded-xl">
-            <p>Districts</p>
-            <h3 className="text-3xl text-purple-400 font-bold">{uniqueDistricts}</h3>
-          </div>
+            <div className="bg-purple-500/20 p-5 rounded-xl">
+              <p>Districts</p>
+              <h3 className="text-3xl text-purple-400 font-bold">
+                {uniqueDistricts}
+              </h3>
+            </div>
 
-          <div className="bg-yellow-500/20 p-5 rounded-xl">
-            <p>Status</p>
-            <h3 className="text-yellow-400 font-semibold">Monitoring Active</h3>
+            <div className="bg-yellow-500/20 p-5 rounded-xl">
+              <p>Status</p>
+              <h3 className="text-yellow-400 font-semibold">
+                Monitoring Active
+              </h3>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
 
       </div>
 
@@ -280,53 +319,55 @@ const AdminPage = () => {
 
         <div className="overflow-hidden rounded-2xl border border-white/10 shadow-xl">
 
-        <table className="w-full">
+          <table className="w-full">
 
-          <thead>
+            <thead>
 
-            <tr className="bg-gray-900 text-gray-300">
+              <tr className="bg-gray-900 text-gray-300">
 
-              <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Boat ID</th>
-              <th className="p-4 text-left">District</th>
-              <th className="p-4 text-center">Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {boats.map((boat,index)=>(
-
-              <tr
-              key={boat._id}
-              className={`border-t border-gray-700 hover:bg-white/5
-              ${index%2===0 ? "bg-black/40" : "bg-black/20"}`}>
-
-                <td className="p-4">{boat.name}</td>
-                <td className="p-4 text-cyan-400">{boat.boatId}</td>
-                <td className="p-4">{boat.district}</td>
-
-                <td className="p-4 text-center">
-
-                  <button
-                  onClick={()=>deleteBoat(boat._id)}
-                  className="bg-red-500 px-4 py-1 rounded-lg hover:bg-red-600 transition">
-
-                    Delete
-
-                  </button>
-
-                </td>
+                <th className="p-4 text-left">Name</th>
+                <th className="p-4 text-left">Boat ID</th>
+                <th className="p-4 text-left">District</th>
+                <th className="p-4 text-center">Action</th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
+            <tbody>
 
-        </table>
+              {boats.map((boat, index) => (
+
+                <tr
+                  key={boat._id}
+                  className={`border-t border-gray-700 hover:bg-white/5
+                  ${index % 2 === 0 ? "bg-black/40" : "bg-black/20"}`}
+                >
+
+                  <td className="p-4">{boat.name}</td>
+                  <td className="p-4 text-cyan-400">{boat.boatId}</td>
+                  <td className="p-4">{boat.district}</td>
+
+                  <td className="p-4 text-center">
+
+                    <button
+                      onClick={() => deleteBoat(boat._id)}
+                      className="bg-red-500 px-4 py-1 rounded-lg hover:bg-red-600 transition"
+                    >
+
+                      Delete
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
 
         </div>
 
