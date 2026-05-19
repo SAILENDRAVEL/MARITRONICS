@@ -2,9 +2,15 @@ import { useNavigate } from "react-router-dom";
 import boatImage from "../assets/boat-image.png";
 
 const BoatDetails = () => {
+
   const navigate = useNavigate();
 
+  /* API URL */
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     const name = e.target.name.value.trim();
@@ -13,16 +19,20 @@ const BoatDetails = () => {
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/boat/validateBoat", {
+      const res = await fetch(`${API_URL}/api/boat/validateBoat`, {
+
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
+
         body: JSON.stringify({
           name,
           boatId,
           district
         })
+
       });
 
       const data = await res.json();
@@ -30,6 +40,7 @@ const BoatDetails = () => {
       if (data.valid) {
 
         /* STORE BOAT DETAILS */
+
         sessionStorage.setItem(
           "boatDetails",
           JSON.stringify({
@@ -40,6 +51,7 @@ const BoatDetails = () => {
         );
 
         /* GO TO LIVE STATUS */
+
         navigate("/livestatus");
 
       } else {
@@ -51,12 +63,15 @@ const BoatDetails = () => {
     } catch (error) {
 
       console.error("Boat validation error:", error);
+
       alert("⚠ Server Error. Please try again.");
 
     }
+
   };
 
   return (
+
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black
                     flex items-center justify-center px-6 pt-24">
 
@@ -141,8 +156,11 @@ const BoatDetails = () => {
         </div>
 
       </div>
+
     </div>
+
   );
+
 };
 
 export default BoatDetails;
