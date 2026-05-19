@@ -15,10 +15,12 @@ import BoatLogin from "./pages/BoatLogin";
 import AdminLogin from "./pages/AdminLogin";
 
 /* LIVE SYSTEM */
+
 import LiveMap from "./pages/LiveMap";
 import LiveDashboard from "./pages/LiveDashboard";
 
 /* PROJECT PAGES */
+
 import TeamPage from "./pages/TeamPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import WorkPage from "./pages/WorkPage";
@@ -56,17 +58,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ADMIN PANEL */}
+        {/* ADMIN */}
 
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminPage />} />
 
         {/* BOAT LOGIN */}
 
         <Route path="/boat-login" element={<BoatLogin />} />
-
-        <Route path="/admin" element={<AdminLogin />} />
-
-<Route path="/admin-dashboard" element={<AdminPage />} />
 
         {/* BOAT DETAILS */}
 

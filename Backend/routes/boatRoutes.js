@@ -3,7 +3,7 @@ import Boat from "../models/Boat.js";
 
 const router = express.Router();
 
-/* ---------------- ADD BOAT (ADMIN) ---------------- */
+/* ---------------- ADD BOAT ---------------- */
 
 router.post("/addBoat", async (req, res) => {
 
@@ -34,7 +34,6 @@ router.post("/addBoat", async (req, res) => {
   }
 
 });
-
 
 /* ---------------- VALIDATE BOAT ---------------- */
 
@@ -74,8 +73,7 @@ router.post("/validateBoat", async (req, res) => {
 
 });
 
-export default router;
-/* GET ALL BOATS */
+/* ---------------- GET ALL BOATS ---------------- */
 
 router.get("/allBoats", async (req, res) => {
 
@@ -87,14 +85,15 @@ router.get("/allBoats", async (req, res) => {
 
   } catch (err) {
 
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message
+    });
 
   }
 
 });
 
-
-/* DELETE BOAT */
+/* ---------------- DELETE BOAT ---------------- */
 
 router.delete("/deleteBoat/:id", async (req, res) => {
 
@@ -102,12 +101,18 @@ router.delete("/deleteBoat/:id", async (req, res) => {
 
     await Boat.findByIdAndDelete(req.params.id);
 
-    res.json({ message: "Boat deleted successfully" });
+    res.json({
+      message: "Boat deleted successfully"
+    });
 
   } catch (err) {
 
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message
+    });
 
   }
 
 });
+
+export default router;
